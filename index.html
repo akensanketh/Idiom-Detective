@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idiom Detective — Crack the meaning behind every expression</title>
+  <meta name="description" content="Explore over 1,000 English idioms with meanings, origins, examples, and test your skills in Detective Quiz Mode!">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="navbar">
+      <div class="nav-brand" id="brand-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+        </div>
+        <div class="brand-text">
+          <h1>IDIOM DETECTIVE</h1>
+          <span class="tagline">INSPECT THE EVIDENCE</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-btn active" data-tab="home">
+          <i class="fa-solid fa-house"></i> Home
+        </button>
+        <button class="nav-btn" data-tab="explore">
+          <i class="fa-solid fa-compass"></i> Explore
+        </button>
+        <button class="nav-btn" data-tab="saved">
+          <i class="fa-solid fa-star"></i> Saved <span class="badge" id="fav-count-badge">0</span>
+        </button>
+        <button class="nav-btn highlight-btn" data-tab="quiz">
+          <i class="fa-solid fa-user-secret"></i> Quiz Challenge
+        </button>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- ================= HOME TAB ================= -->
+      <section id="home-tab" class="tab-page active">
+        
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+          <div class="hero-content">
+            <span class="badge-pill detective-badge"><i class="fa-solid fa-shield-halved"></i> CASE FILE #1020</span>
+            <h2>Crack the meaning behind <span class="gradient-text">every expression</span>.</h2>
+            <p>Search over 1,000+ verified English idioms, discover origins, and master daily cases.</p>
+            
+            <!-- Global Search Field -->
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input type="text" id="home-search-input" placeholder="Search an idiom, keyword, or meaning (e.g. 'bullet', 'rain', 'spill')..." autocomplete="off">
+              <button class="clear-btn hidden" id="clear-search-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Case Section -->
+        <div class="section-container">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-calendar-day highlight-icon"></i> Daily Case File</h3>
+            <button id="random-idiom-btn" class="btn secondary-btn">
+              <i class="fa-solid fa-dice"></i> Random Idiom
+            </button>
+          </div>
+
+          <div class="daily-case-card glass-card" id="daily-case-container">
+            <div class="loading-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i> Investigating daily case...</div>
+          </div>
+        </div>
+
+        <!-- Quick Categories -->
+        <div class="section-container">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-folder-open highlight-icon"></i> Evidence Categories</h3>
+            <a href="#" class="view-all-link" id="view-all-categories-link">View All <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+
+          <div class="categories-grid" id="quick-categories-grid">
+            <!-- Programmatically populated -->
+          </div>
+        </div>
+
+        <!-- Featured Idioms List / Search Results -->
+        <div class="section-container">
+          <div class="section-header">
+            <h3 id="idioms-list-title"><i class="fa-solid fa-list-check highlight-icon"></i> Popular Evidence</h3>
+            <span class="count-badge" id="idioms-count-label">0 idioms</span>
+          </div>
+
+          <div class="idiom-cards-grid" id="main-idioms-grid">
+            <!-- Idiom cards injected here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= EXPLORE TAB ================= -->
+      <section id="explore-tab" class="tab-page">
+        <div class="page-header">
+          <h2><i class="fa-solid fa-compass"></i> Explore Evidence Database</h2>
+          <p>Filter idioms by difficulty levels, usage formality, and crime case categories.</p>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="filters-bar glass-card">
+          <div class="filter-group">
+            <label><i class="fa-solid fa-filter"></i> Category:</label>
+            <select id="explore-category-select" class="custom-select">
+              <option value="ALL">All Categories</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label><i class="fa-solid fa-layer-group"></i> Difficulty:</label>
+            <div class="chip-group" id="difficulty-chips">
+              <button class="chip active" data-difficulty="ALL">All</button>
+              <button class="chip" data-difficulty="beginner">Beginner</button>
+              <button class="chip" data-difficulty="intermediate">Intermediate</button>
+              <button class="chip" data-difficulty="advanced">Advanced</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label><i class="fa-solid fa-magnifying-glass"></i> Filter:</label>
+            <input type="text" id="explore-filter-input" placeholder="Filter evidence..." class="custom-input">
+          </div>
+        </div>
+
+        <div class="idiom-cards-grid" id="explore-idioms-grid">
+          <!-- Filtered items injected here -->
+        </div>
+      </section>
+
+      <!-- ================= SAVED TAB ================= -->
+      <section id="saved-tab" class="tab-page">
+        <div class="page-header">
+          <h2><i class="fa-solid fa-star"></i> Saved Cases & History</h2>
+          <p>Access your favorite bookmarked idioms and recent investigation logs.</p>
+        </div>
+
+        <div class="tab-subnav">
+          <button class="subtab-btn active" data-subtab="favorites"><i class="fa-solid fa-bookmark"></i> Favorites (<span id="saved-fav-count">0</span>)</button>
+          <button class="subtab-btn" data-subtab="history"><i class="fa-solid fa-clock-rotate-left"></i> Recently Viewed</button>
+        </div>
+
+        <div id="saved-favorites-view" class="subtab-content active">
+          <div class="idiom-cards-grid" id="saved-favorites-grid"></div>
+        </div>
+
+        <div id="saved-history-view" class="subtab-content">
+          <div class="history-actions">
+            <button id="clear-history-btn" class="btn danger-btn"><i class="fa-solid fa-trash"></i> Clear History</button>
+          </div>
+          <div class="idiom-cards-grid" id="saved-history-grid"></div>
+        </div>
+      </section>
+
+      <!-- ================= QUIZ TAB ================= -->
+      <section id="quiz-tab" class="tab-page">
+        <div class="quiz-container glass-card" id="quiz-card-container">
+          
+          <!-- Quiz Start View -->
+          <div id="quiz-start-view" class="quiz-subview active">
+            <div class="quiz-badge"><i class="fa-solid fa-user-secret"></i> DETECTIVE ACADEMY</div>
+            <h2>Test Your Idiom Detective Skills</h2>
+            <p>Match meanings to correct idioms, score points, build your streak, and rank up from Rookie to Master Sleuth!</p>
+            
+            <div class="quiz-stats-overview">
+              <div class="stat-box">
+                <span class="stat-number" id="quiz-high-score">0</span>
+                <span class="stat-label">High Score</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="quiz-streak">0 🔥</span>
+                <span class="stat-label">Best Streak</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="quiz-rank-label">Rookie Inspector</span>
+                <span class="stat-label">Detective Rank</span>
+              </div>
+            </div>
+
+            <div class="quiz-mode-select">
+              <label><i class="fa-solid fa-sliders"></i> Select Difficulty:</label>
+              <div class="mode-buttons">
+                <button class="mode-btn active" data-quiz-diff="ALL">Mixed Cases</button>
+                <button class="mode-btn" data-quiz-diff="beginner">Beginner</button>
+                <button class="mode-btn" data-quiz-diff="intermediate">Intermediate</button>
+                <button class="mode-btn" data-quiz-diff="advanced">Advanced</button>
+              </div>
+            </div>
+
+            <button id="start-quiz-btn" class="btn primary-btn large-btn"><i class="fa-solid fa-play"></i> Start Case Investigation</button>
+          </div>
+
+          <!-- Quiz Active Question View -->
+          <div id="quiz-game-view" class="quiz-subview">
+            <div class="quiz-top-bar">
+              <div class="question-tracker">Case <span id="current-q-num">1</span> of 10</div>
+              <div class="quiz-score">Score: <strong id="current-score">0</strong></div>
+            </div>
+
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="quiz-progress-bar" style="width: 10%;"></div>
+            </div>
+
+            <div class="quiz-question-box">
+              <span class="question-label">What is the meaning of the idiom:</span>
+              <h3 id="quiz-question-text" class="question-idiom">"Bite the bullet"</h3>
+            </div>
+
+            <div class="quiz-options-grid" id="quiz-options-container">
+              <!-- Options buttons injected here -->
+            </div>
+
+            <div class="quiz-feedback hidden" id="quiz-feedback-box">
+              <div id="feedback-result-title"></div>
+              <p id="feedback-explanation-text"></p>
+              <button id="next-question-btn" class="btn primary-btn">Next Case <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Quiz Result View -->
+          <div id="quiz-result-view" class="quiz-subview">
+            <div class="result-badge" id="result-rank-icon"><i class="fa-solid fa-award"></i></div>
+            <h2 id="result-title">Case Completed!</h2>
+            <p id="result-subtitle">You solved 8 out of 10 cases accurately.</p>
+
+            <div class="result-score-display">
+              <div class="big-score" id="result-score-num">800</div>
+              <div class="score-unit">POINTS</div>
+            </div>
+
+            <div class="result-badge-card" id="result-badge-card">
+              <h4 id="result-rank-name">Master Detective</h4>
+              <p id="result-rank-desc">Exceptional analytical mind! No evidence escapes your observation.</p>
+            </div>
+
+            <div class="result-actions">
+              <button id="retry-quiz-btn" class="btn primary-btn"><i class="fa-solid fa-rotate-right"></i> Play Again</button>
+              <button id="exit-quiz-btn" class="btn secondary-btn"><i class="fa-solid fa-house"></i> Return Home</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- Idiom Dossier Modal -->
+    <div class="modal-overlay hidden" id="idiom-modal-overlay">
+      <div class="modal-card glass-card">
+        <button class="modal-close-btn" id="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="modal-header">
+          <div class="modal-tags">
+            <span class="tag category-tag" id="modal-category">Actions</span>
+            <span class="tag difficulty-tag" id="modal-difficulty">Intermediate</span>
+            <span class="tag usage-tag" id="modal-usage">Informal</span>
+          </div>
+          <h2 id="modal-idiom-title">Bite the bullet</h2>
+          <button class="fav-action-btn" id="modal-fav-btn"><i class="fa-regular fa-star"></i> Favorite</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="dossier-section">
+            <h4><i class="fa-solid fa-bullseye"></i> Meaning</h4>
+            <p class="meaning-text" id="modal-meaning"></p>
+          </div>
+
+          <div class="dossier-section">
+            <h4><i class="fa-solid fa-book-open"></i> Detailed Explanation</h4>
+            <p id="modal-explanation"></p>
+          </div>
+
+          <div class="dossier-section example-box">
+            <h4><i class="fa-solid fa-quote-left"></i> Example Usage</h4>
+            <p class="example-text" id="modal-example"></p>
+          </div>
+
+          <div class="dossier-section" id="modal-origin-container">
+            <h4><i class="fa-solid fa-landmark"></i> Historical Origin</h4>
+            <p id="modal-origin"></p>
+          </div>
+
+          <div class="dossier-section" id="modal-related-container">
+            <h4><i class="fa-solid fa-link"></i> Related Expressions</h4>
+            <div class="related-chips" id="modal-related-chips"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar for Mobile -->
+    <nav class="mobile-nav">
+      <button class="mobile-nav-btn active" data-tab="home">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="explore">
+        <i class="fa-solid fa-compass"></i>
+        <span>Explore</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="saved">
+        <i class="fa-solid fa-star"></i>
+        <span>Saved</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="quiz">
+        <i class="fa-solid fa-user-secret"></i>
+        <span>Quiz</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
