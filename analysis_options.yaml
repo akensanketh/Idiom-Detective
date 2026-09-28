@@ -22,3 +22,4 @@ analyzer:
     - android/**
     - web/**
     - windows/**
+    - ios/**
